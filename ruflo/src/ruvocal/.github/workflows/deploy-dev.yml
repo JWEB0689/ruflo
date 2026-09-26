@@ -11,7 +11,7 @@ jobs:
 
   deploy-dev:
     if: contains(github.event.pull_request.labels.*.name, 'preview')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: branch-slug
     environment:
       name: dev

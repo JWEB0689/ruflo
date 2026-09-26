@@ -16,7 +16,7 @@ jobs:
   # Code quality and security checks
   security:
     name: Security & Code Quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-26.04]
     
     steps:
       - name: Checkout code
@@ -89,7 +89,7 @@ jobs:
   # Documentation generation
   docs:
     name: Documentation & Examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     
     steps:
       - name: Checkout code
@@ -114,9 +114,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             platform: linux
           - os: macos-latest
             platform: darwin
@@ -266,7 +266,7 @@ jobs:
   # Deployment (only on main branch)
   deploy:
     name: Deploy & Release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
@@ -302,7 +302,7 @@ jobs:
   # Final status check
   status:
     name: CI Status
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [security, test, build]
     if: always()
     

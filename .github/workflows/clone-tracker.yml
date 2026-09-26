@@ -35,7 +35,7 @@ concurrency:
 jobs:
   track:
     name: Snapshot clones for ruflo ecosystem
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout main

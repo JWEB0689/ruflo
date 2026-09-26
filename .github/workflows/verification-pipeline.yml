@@ -25,7 +25,7 @@ jobs:
   # Pre-verification setup and validation
   setup-verification:
     name: 🚀 Setup Verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     outputs:
       verification-id: ${{ steps.setup.outputs.verification-id }}
       test-matrix: ${{ steps.setup.outputs.test-matrix }}
@@ -47,7 +47,7 @@ jobs:
         run: |
           VERIFICATION_ID="verify-$(date +%Y%m%d-%H%M%S)-${{ github.sha }}"
           echo "verification-id=$VERIFICATION_ID" >> $GITHUB_OUTPUT
-          echo "test-matrix={\"include\":[{\"os\":\"ubuntu-latest\",\"node\":\"18\"},{\"os\":\"ubuntu-latest\",\"node\":\"20\"},{\"os\":\"macos-latest\",\"node\":\"20\"},{\"os\":\"windows-latest\",\"node\":\"20\"}]}" >> $GITHUB_OUTPUT
+          echo "test-matrix={\"include\":[{\"os\":\"ubuntu-26.04\",\"node\":\"18\"},{\"os\":\"ubuntu-26.04\",\"node\":\"20\"},{\"os\":\"macos-latest\",\"node\":\"20\"},{\"os\":\"windows-latest\",\"node\":\"20\"}]}" >> $GITHUB_OUTPUT
           echo "cache-key=${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
@@ -66,7 +66,7 @@ jobs:
   # Security verification
   security-verification:
     name: 🛡️ Security Verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: setup-verification
     steps:
       - name: Checkout repository
@@ -119,7 +119,7 @@ jobs:
   # Code quality verification
   code-quality:
     name: 📝 Code Quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: setup-verification
     steps:
       - name: Checkout repository
@@ -226,14 +226,14 @@ jobs:
         continue-on-error: true
 
       - name: Run performance tests
-        if: matrix.os == 'ubuntu-latest' && matrix.node == '20'
+        if: matrix.os == 'ubuntu-26.04' && matrix.node == '20'
         run: |
           echo "⚡ Running performance tests..."
           npm run test:performance || echo "⚠️ Some performance tests failed (non-blocking)"
         continue-on-error: true
 
       - name: Generate coverage report
-        if: matrix.os == 'ubuntu-latest' && matrix.node == '20'
+        if: matrix.os == 'ubuntu-26.04' && matrix.node == '20'
         run: |
           echo "📊 Generating coverage report..."
           npm run test:coverage || echo "⚠️ Coverage generation failed (non-blocking)"
@@ -252,7 +252,7 @@ jobs:
   # Build verification - simplified for V3 monorepo structure
   build-verification:
     name: 🏗️ Build Verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [setup-verification, code-quality]
     steps:
       - name: Checkout repository
@@ -297,7 +297,7 @@ jobs:
   # Documentation verification - simplified checks
   docs-verification:
     name: 📚 Documentation Verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: setup-verification
     steps:
       - name: Checkout repository
@@ -320,7 +320,7 @@ jobs:
   # Performance benchmarking
   performance-verification:
     name: ⚡ Performance Verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [setup-verification, build-verification]
     if: github.event_name == 'push' || github.event.inputs.verification_mode == 'full'
     steps:
@@ -378,7 +378,7 @@ jobs:
   # Final verification report
   verification-report:
     name: 📊 Verification Report
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs:
       - setup-verification
       - security-verification

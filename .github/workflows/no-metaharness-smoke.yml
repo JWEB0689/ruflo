@@ -33,7 +33,7 @@ on:
 
 jobs:
   smoke-without-metaharness:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     # iter 136: 10m → 20m — consistently hit 10m wall on shared runners
     # (#2405 PR run + manual re-run both canceled at exactly 10m0s).
     timeout-minutes: 20

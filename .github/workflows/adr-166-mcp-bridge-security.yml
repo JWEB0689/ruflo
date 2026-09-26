@@ -27,7 +27,7 @@ on:
 jobs:
   static-source-lock:
     name: Static-source security lock
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,7 +38,7 @@ jobs:
 
   runtime-behavior:
     name: Runtime behavior — 401 + terminal gate + fail-closed
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,7 +53,7 @@ jobs:
 
   compose-loopback-only:
     name: Compose default binds loopback + Mongo has auth
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - name: Assert docker-compose binds ONLY to 127.0.0.1
@@ -82,7 +82,7 @@ jobs:
 
   federation-loopback-default:
     name: plugin-agent-federation bindHost default
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - name: Assert bindHost defaults to 127.0.0.1

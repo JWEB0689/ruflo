@@ -52,7 +52,7 @@ env:
 
 jobs:
   invariants:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
           python3 -c "import yaml,sys; yaml.safe_load(open('v3/docs/api/cognitum-v1.openapi.yaml')); print('openapi yaml ok')"
 
   runtime-suppression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4

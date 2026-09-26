@@ -280,7 +280,7 @@ jobs:
   # YAML or router regression is caught at PR-time, not at scheduled cron.
   static-regression-guards:
     name: Static regression guards (#2267 YAML + #2257 router + #2562 lockfile)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -325,7 +325,7 @@ jobs:
 
   test:
     name: Test V3 Packages
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -399,7 +399,7 @@ jobs:
 
   typecheck:
     name: Type Check V3
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -437,7 +437,7 @@ jobs:
         # moved to VS2026, which node-gyp's VS detector can't identify, breaking
         # native builds for hnswlib-node and better-sqlite3. Unpin once node-gyp
         # supports VS2026 detection.
-        os: [ubuntu-latest, macos-latest, windows-2022]
+        os: [ubuntu-26.04, macos-latest, windows-2022]
 
     steps:
       - name: Checkout code
@@ -488,7 +488,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-26.04, macos-latest]
         node: ['22', '24']
         # macos-latest's bundled Python 3.12 removed distutils, breaking
         # node-gyp on Node 24's hnswlib-node + better-sqlite3 builds. Drop
@@ -598,7 +598,7 @@ jobs:
         # string from hooks.json via `shell: true`, so this is a genuine
         # regression guard against the #2721 shape recurring, not just a
         # POSIX-only smoke.
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
         # Node 22 is the project's documented baseline (engines.node: '>=20')
         # but Node 20 had environment-specific issues with multi-line stdin
         # round-tripping that didn't reproduce on Node 22 or locally — same
@@ -661,7 +661,7 @@ jobs:
     # dist, shell scripts, agent-facing markdown recipes) and fails
     # if any call is missing the dimension flag.
     name: browser rvf create flag smoke (#2015)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -702,7 +702,7 @@ jobs:
     # the plugin in isolation so the eleven sublinear wedges are verified
     # on every push and PR.
     name: ruflo-graph-intelligence build + test smoke (#2044, ADR-123)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -752,7 +752,7 @@ jobs:
     # allowlist, or the audit script itself. It also runs on pushes to main
     # so direct-to-main changes (rare) are caught.
     name: Supply-chain audit (#2046)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -795,7 +795,7 @@ jobs:
     #
     # https://github.com/actions/dependency-review-action
     name: Dependency review (#2046)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     if: github.event_name == 'pull_request'
 
     steps:
@@ -837,7 +837,7 @@ jobs:
     # and the cross-platform dist build. This smoke is the fast gate
     # that fails before that.
     name: witness marker drift smoke (#2021)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -872,7 +872,7 @@ jobs:
     # Independent job so a precondition contract break is named clearly
     # in the CI summary. Wired into witness-verify's `needs:` below.
     name: witness verify precondition smoke (#1880)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -910,7 +910,7 @@ jobs:
     # allowed-tools, drops the type-depends-on relation, or weakens the
     # regex), this smoke catches it.
     name: kg-extract type-import classification smoke (#2049)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -953,7 +953,7 @@ jobs:
     # changes the namespace, or breaks the local CG kernel, this smoke
     # catches it before merge.
     name: neural-trader portfolio CG smoke (#2068, ADR-126 Phase 3)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1000,7 +1000,7 @@ jobs:
     # field, or removes the fail-closed branch, this smoke catches it
     # before merge.
     name: neural-trader backtest signing smoke (#2068, ADR-126 Phase 4)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1057,7 +1057,7 @@ jobs:
     # the pipeline-messages schema, or rewrites a comms section without
     # the upstream/downstream wiring, this smoke catches it before merge.
     name: neural-trader pipeline risk-gate smoke (#2068, ADR-126 Phase 5)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1110,7 +1110,7 @@ jobs:
     # without the `trading-analysis` namespace — this smoke catches it
     # before merge.
     name: neural-trader feature attribution smoke (#2068, ADR-126 Phase 6)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1154,7 +1154,7 @@ jobs:
     # If a future PR reverts to prefix-matching, drops the await, or
     # silently warns, this smoke catches it before merge.
     name: plugin-registry signature verification smoke (#1922, CWE-347)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1196,7 +1196,7 @@ jobs:
     #      `loadRuvllmWasm()` or looks up a pre-initialized instance.
     #   5. No new ruvllm_* tools have been added that bypass the gate.
     name: ruvllm WASM auto-init smoke (#2086)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1216,7 +1216,7 @@ jobs:
     # @ummcke00. Fix routes executeAgentTask through callAnthropicMessages
     # which dispatches Anthropic / OpenRouter / Ollama by env var.
     name: agent_execute provider routing smoke (#2042)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1249,7 +1249,7 @@ jobs:
     # the reporter's setup), runs listEntries, and asserts total === 251
     # AND that the backfill promoted all rows to 'active'.
     name: memory stats legacy-DB smoke (#2120)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1302,7 +1302,7 @@ jobs:
     # A failure here means vitest.setup.ts stopped cleaning up, or a new
     # binding started writing to a path not covered by LEAK_SUFFIXES.
     name: memory no-stray-db smoke (ADR-125 P7)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1350,7 +1350,7 @@ jobs:
     #   - .claude/helpers/github-safe.js           (dogfood)
     #   - v3/@claude-flow/cli/.claude/helpers/      (init-template)
     name: github-safe injection smoke (#2089, ADR-127 Phase 1)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1380,7 +1380,7 @@ jobs:
     # Phase 3 upgrades all @v3 refs to @v4; this smoke is the regression
     # gate that prevents them from drifting back.
     name: github actions pin smoke (#2089, ADR-127 Phase 1)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1409,7 +1409,7 @@ jobs:
     # that prevents them from drifting back via copy-paste from blog posts
     # or AI-generated snippets that still reference the old versions.
     name: github deprecated actions smoke (#2089, ADR-127 Phase 3)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1437,7 +1437,7 @@ jobs:
     # the "Generated with" emoji pattern reappears — preventing copy-paste
     # regression from blog posts or AI-generated snippets.
     name: github attribution opt-in smoke (#2089, ADR-127 Phase 4)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1471,7 +1471,7 @@ jobs:
     # Independent job (not nested in plugin-hooks-smoke) so the gate is
     # individually visible and the CI summary names the failure clearly.
     name: pre-bash hook safety smoke (#2017)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1499,7 +1499,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-26.04, macos-latest]
 
     steps:
       - name: Checkout code
@@ -1544,7 +1544,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-26.04, macos-latest]
 
     steps:
       - name: Checkout code
@@ -1587,7 +1587,7 @@ jobs:
     # behavioural probe runs with an internal 30s timeout so CI never hangs
     # on slow memory-backend init.
     name: MCP paired-tool round-trip smoke (#1889)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1641,7 +1641,7 @@ jobs:
     # `node scripts/audit-tool-descriptions.mjs --update-baseline` after
     # landing a description-improvement PR to lock the new floor.
     name: Tool description discoverability (ADR-112)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1673,7 +1673,7 @@ jobs:
     # (D) after building each plugin, every main/module/exports path exists on
     # disk (#1904). The build step is what makes check D live.
     name: Plugin package install-safety (#1902/#1903/#1904)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1788,7 +1788,7 @@ jobs:
     # the newer npm shipped with Node 24 (where the bug surfaces) is
     # actually exercised.
     name: CLI npx-install smoke (#1147 / #2018) / Node ${{ matrix.node }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -1834,7 +1834,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
 
     steps:
       - name: Checkout code
@@ -1860,7 +1860,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
 
     steps:
       - name: Checkout code
@@ -1905,7 +1905,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
 
     steps:
       - name: Checkout code
@@ -1940,7 +1940,7 @@ jobs:
     # scripts/ruflo-hook.sh (prefers a local `ruflo`/`claude-flow` binary,
     # falls back to `npx --prefer-offline`, always exits 0).
     name: Hook-command install safety (#1921)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -1987,7 +1987,7 @@ jobs:
     # mismatched dim (the historical 768) is silent: HNSW rejects every
     # `memory_store --vector` insert and `memory_search` always returns 0.
     name: Vector-index dimension audit (#1947)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2013,7 +2013,7 @@ jobs:
     # smoke runs against the *built* dist/index.js to catch missing exports
     # or accidental relaxation of the default policy.
     name: ToolOutputGuardrail smoke (ADR-131, #2149)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2070,7 +2070,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-26.04, macos-latest, windows-latest]
     needs: [smoke-install-no-bsqlite, plugin-hooks-smoke, pre-bash-hook-smoke, witness-verify-precondition-smoke, witness-marker-drift-smoke, browser-rvf-create-flags-smoke, mcp-protocol-smoke, memory-import-smoke, tool-descriptions-audit, mcp-roundtrip-smoke, plugin-package-audit, cli-npx-install-smoke, hook-command-audit, vector-dim-audit, windows-hook-shim-smoke, windows-init-hooks-smoke, windows-hook-execution-smoke]
 
     steps:
@@ -2186,7 +2186,7 @@ jobs:
 
   publish:
     name: Publish to npm (alpha)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [build, smoke-install-no-bsqlite, plugin-hooks-smoke, witness-verify]
     if: github.ref == 'refs/heads/v3' && github.event_name == 'push'
 
@@ -2239,7 +2239,7 @@ jobs:
     #
     # Zero runtime deps; pure Node.js readFileSync + readdirSync.
     name: init-bundle invariants smoke (#2095, ADR-128 Phase 5)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2272,7 +2272,7 @@ jobs:
     #
     # Zero runtime deps; pure Node.js readFileSync + readdirSync.
     name: init-scaffold references smoke (#2971, ADR-382 Part C)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2293,7 +2293,7 @@ jobs:
     # attachJsModelProvider() is called at agent-creation time.
     # Static-only smoke: no build, no API keys required.
     name: wasm provider bridge smoke (ADR-129 P1)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2312,7 +2312,7 @@ jobs:
     # Fixes the silent drop of template.mcp_tools in buildRvfFromTemplate.
     # Static-only smoke: no build, no API keys required.
     name: wasm compose smoke (ADR-129 P2)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2331,7 +2331,7 @@ jobs:
     # introspection), with AIDefence gate on wasm_gallery_import.
     # Static-only smoke: no build, no API keys required.
     name: wasm gallery CRUD smoke (ADR-129 P3)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2349,7 +2349,7 @@ jobs:
     # ADR-129 Phase 4 — plugin manifest "rvagent" field + includePlugins
     # in wasm_agent_compose.  Static + behavioral fixture smoke.
     name: wasm plugin bridge smoke (ADR-129 P4)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2366,7 +2366,7 @@ jobs:
   graph-schema-smoke:
     # ADR-130 Phase 1 — graph_edges schema + PQ encoder + edge writer
     name: graph schema smoke (ADR-130 P1)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -2410,7 +2410,7 @@ jobs:
   graph-query-smoke:
     # ADR-130 Phase 2+5 — agentdb_graph-query + agentdb_graph-pathfinder dispatch
     name: graph query + pathfinder smoke (ADR-130 P2+P5)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: graph-schema-smoke
     steps:
       - name: Checkout code
@@ -2454,7 +2454,7 @@ jobs:
   graph-trajectory-smoke:
     # ADR-130 Phase 3 — SONA trajectory-to-graph hooks
     name: graph trajectory hooks smoke (ADR-130 P3)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: graph-schema-smoke
     steps:
       - name: Checkout code
@@ -2493,7 +2493,7 @@ jobs:
   graph-plugin-adapter-smoke:
     # ADR-130 Phase 4 — plugin adapter contract (GraphEdgesSource)
     name: graph plugin adapter smoke (ADR-130 P4)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: graph-schema-smoke
     steps:
       - name: Checkout code
@@ -2524,7 +2524,7 @@ jobs:
   graph-benchmark:
     # ADR-130 Phase 6 — graph write/query throughput benchmark
     name: graph benchmark (ADR-130 P6)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [graph-query-smoke, graph-trajectory-smoke, graph-plugin-adapter-smoke]
     timeout-minutes: 40
     steps:
@@ -2570,7 +2570,7 @@ jobs:
     #         the known-bad fallback values (domainsCompleted=0 when patterns>0,
     #         intelligencePct=1 when system is healthy) are not present.
     name: statusline generator delegation smoke (#2195)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
@@ -2664,7 +2664,7 @@ jobs:
     #   [3/3] RUNTIME #2207 — bare .claude/settings.json must NOT trigger
     #         the duplicate-detection guard (false-positive check)
     name: wizard init regression guard (#2206 #2207 #2208)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout code
